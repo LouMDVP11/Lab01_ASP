@@ -10,17 +10,17 @@
         <br/>
         <p> Seleccione un Departamento:</p>
        
-        <asp:DropDownList ID="DropDownList1" runat="server" Height="25px" Width="155px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+        <asp:DropDownList ID="DropDownList1" runat="server" Height="25px" Width="155px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True" AppendDataBoundItems="true">
         </asp:DropDownList>
        
+        &nbsp;
+        <br />
         <br />
         <asp:Label ID="lblTempPromedio" runat="server" Text="Temperatura promedio en el departamento: "></asp:Label>
         <br />
        
         <p> 
-            <asp:Table ID="Table1" runat="server" Height="29px" Width="144px">
-            </asp:Table>
-        </p>
+            &nbsp;</p>
     </div>
 
 

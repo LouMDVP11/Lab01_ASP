@@ -61,13 +61,16 @@ namespace Lab01_ASP
                     }
                 }
             }
-            if (lstDepartamentos.Count > 0)
-            {
-                DropDownList1.DataValueField = "NoIdentificacion";
-                DropDownList1.DataTextField = "Nombre";
-                DropDownList1.DataSource = lstDepartamentos;
-                DropDownList1.DataBind();
-            }
+            if(!IsPostBack)
+                if (lstDepartamentos.Count > 0)
+                {
+                    DropDownList1.Items.Clear();
+                    DropDownList1.DataValueField = "NoIdentificacion";
+                    DropDownList1.DataTextField = "Nombre";
+                    DropDownList1.DataSource = lstDepartamentos;
+                    DropDownList1.DataBind();
+                    mostrarTemp();
+                }
             if (lstTemperaturas.Count > 0)
             {
                 
@@ -77,20 +80,36 @@ namespace Lab01_ASP
                 temperaturaProm += l.Grados;
             }
             temperaturaProm = temperaturaProm / lstTemperaturas.Count;
-            lblTemp.Text = temperaturaProm + " °C";
+            lblTemp.Text = temperaturaProm + " °C"; 
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int tempP = 0;
-            clsDepartamento depTemp = lstDepartamentos.Find(d => d.NoIdentificacion == DropDownList1.SelectedValue.ToString());
-            if(depTemp!=null)
-                foreach (var t in lstTemperaturas) {
-                    if (depTemp.NoIdentificacion.Equals(t.NoIdentificacion)) {
+            mostrarTemp();
+        }
+
+        protected void btnMostrar_Click(object sender, EventArgs e)
+        {
+        }
+        public void mostrarTemp(){
+            double tempP = 0;
+            int cont = 0;
+            clsDepartamento depTemp = lstDepartamentos.Find(d => d.Nombre == DropDownList1.SelectedItem.ToString());
+            if (depTemp != null)
+                foreach (var t in lstTemperaturas)
+                {
+                    if (depTemp.NoIdentificacion.Equals(t.NoIdentificacion))
+                    {
                         tempP += t.Grados;
-                    }    
+                        cont++;
+                    }
                 }
-            lblTemp.Text = "Temperatura promedio en el Departamento: " + tempP + "°C";
+            lblTempPromedio.Text = "Temperatura promedio en el departamento: " + (tempP/cont) + "°C";
+        }
+
+        protected void DropDownList1_TextChanged(object sender, EventArgs e)
+        {
+            mostrarTemp();
         }
     }
 }
