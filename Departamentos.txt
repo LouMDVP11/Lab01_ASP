@@ -2,5 +2,11 @@
 Quetzaltenango
 0101
 Guatemala
-0107
+1701
 Petén
+0601
+Santa Rosa
+1601
+Alta Verapaz
+0801
+Totonicapan

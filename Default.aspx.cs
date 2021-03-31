@@ -71,10 +71,6 @@ namespace Lab01_ASP
                     DropDownList1.DataBind();
                     mostrarTemp();
                 }
-            if (lstTemperaturas.Count > 0)
-            {
-                
-            }
             foreach (var l in lstTemperaturas)
             {
                 temperaturaProm += l.Grados;
