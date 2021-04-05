@@ -8,8 +8,8 @@ namespace Lab01_ASP
     public class clsTemp
     {
         string nombre, temp; int temperatura;
-        public int Temperatura { get => temperatura; set => temperatura = value; }
         public string Nombre { get => nombre; set => nombre = value; }
-        public string Temp { get => temp; set => temp = value; }
+        public int Temp { get => temperatura; set => temperatura = value; }
+        public string Cent { get => temp; set => temp = value; }
     }
 }

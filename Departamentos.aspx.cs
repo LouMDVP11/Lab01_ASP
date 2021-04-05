@@ -33,16 +33,9 @@ namespace Lab01_ASP
                         writer.WriteLine(nuevoDepartamento.Nombre);
                         writer.Close();
                         this.lstDepartamentos.Add(nuevoDepartamento);
-                        lstNoId.Items.Clear();
-                        lstNoId.DataValueField = "NoIdentificacion";
-                        lstNoId.DataTextField = "NoIdentificacion";
-                        lstNoId.DataSource = lstDepartamentos;
-                        lstNoId.DataBind();
-                        lstNombre.Items.Clear();
-                        lstNombre.DataValueField = "Nombre";
-                        lstNombre.DataTextField = "Nombre";
-                        lstNombre.DataSource = lstDepartamentos;
-                        lstNombre.DataBind();
+                        GridView1.DataSource = null;
+                        GridView1.DataSource = lstDepartamentos;
+                        GridView1.DataBind();
                         string script = "alert(\"Se ha registrado el departamento exitosamente.\");";
                         ScriptManager.RegisterStartupScript(this, GetType(),
                                               "ServerControlScript", script, true);
@@ -87,16 +80,9 @@ namespace Lab01_ASP
             reader.Close(); if (!IsPostBack)
             if (lstDepartamentos.Count > 0)
             {
-                lstNoId.Items.Clear();
-                lstNoId.DataValueField = "NoIdentificacion";
-                lstNoId.DataTextField = "NoIdentificacion";
-                lstNoId.DataSource = lstDepartamentos;
-                lstNoId.DataBind();
-                lstNombre.Items.Clear();
-                lstNombre.DataValueField = "Nombre";
-                lstNombre.DataTextField = "Nombre";
-                lstNombre.DataSource = lstDepartamentos;
-                lstNombre.DataBind();
+                GridView1.DataSource = null;
+                GridView1.DataSource = lstDepartamentos;
+                GridView1.DataBind();
             }
         }
         protected void Page_Load(object sender, EventArgs e)

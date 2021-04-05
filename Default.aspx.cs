@@ -13,6 +13,7 @@ namespace Lab01_ASP
         List<clsDepartamento> lstDepartamentos = new List<clsDepartamento>();
         List<clsTemperatura> lstTemperaturas = new List<clsTemperatura>();
         List<clsTemp> lstAux = new List<clsTemp>();
+        static int orden;
         double temperaturaProm;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -54,9 +55,12 @@ namespace Lab01_ASP
                     if (l.NoIdentificacion == d.NoIdentificacion)
                     {
                         clsTemp aux = new clsTemp();
-                        aux.Temperatura = l.Grados;
+                        aux.Temp = l.Grados;
                         aux.Nombre = d.Nombre;
-                        aux.Temp = aux.Temp + "°C";
+                        aux.Cent = aux.Cent + "°C";// solo aparecera °C
+                        // antes: aux.Grados + "°C" para que apareciera valor°C
+                        // no se pudo poner una columna en visible false, entonces
+                        // se modificó este código para que solo aparezca el "°C"
                         lstAux.Add(aux);
                     }
                 }
@@ -70,7 +74,24 @@ namespace Lab01_ASP
                     DropDownList1.DataSource = lstDepartamentos;
                     DropDownList1.DataBind();
                     mostrarTemp();
+                    dtgDatos.DataSource = null;
+                    dtgDatos.DataSource = lstAux;
+                    dtgDatos.DataBind();
+                    orden = 0;
                 }
+            if (orden == 1) {
+                dtgDatos.DataSource = null;
+                dtgDatos.DataSource = lstAux.OrderByDescending(l => l.Temp);
+                dtgDatos.DataBind();
+                orden = 0;
+            }
+            if (orden == 2)
+            {
+                dtgDatos.DataSource = null;
+                dtgDatos.DataSource = lstAux.OrderBy(l => l.Temp);
+                dtgDatos.DataBind();
+                orden = 0;
+            }
             foreach (var l in lstTemperaturas)
             {
                 temperaturaProm += l.Grados;
@@ -100,12 +121,22 @@ namespace Lab01_ASP
                         cont++;
                     }
                 }
-            lblTempPromedio.Text = "Temperatura promedio en el departamento: " + (tempP/cont) + "°C";
+            lblTempPromedio.Text = "Temperatura promedio en el departamento: " + Math.Round(tempP/cont, 2) + "°C";
         }
 
         protected void DropDownList1_TextChanged(object sender, EventArgs e)
         {
             mostrarTemp();
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            orden = 1;
+        }
+
+        protected void brnAscendente_Click(object sender, EventArgs e)
+        {
+            orden = 2;
         }
     }
 }

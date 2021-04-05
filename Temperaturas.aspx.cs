@@ -52,9 +52,9 @@ namespace Lab01_ASP
                     if (l.NoIdentificacion == d.NoIdentificacion)
                     {
                         clsTemp aux = new clsTemp();
-                        aux.Temperatura = l.Grados;
+                        aux.Temp = l.Grados;
                         aux.Nombre = d.Nombre;
-                        aux.Temp = aux.Temperatura + "°C";
+                        aux.Cent = aux.Temp + "°C";
                         lstAux.Add(aux);
                     }
                 }
@@ -71,16 +71,9 @@ namespace Lab01_ASP
                 }
             if (lstTemperaturas.Count > 0)
             {
-                lstNoId.Items.Clear();
-                lstNoId.DataValueField = "Nombre";
-                lstNoId.DataTextField = "Nombre";
-                lstNoId.DataSource = lstAux;
-                lstNoId.DataBind();
-                lstTemperatura.Items.Clear();
-                lstTemperatura.DataValueField = "Temp";
-                lstTemperatura.DataTextField = "Temp";
-                lstTemperatura.DataSource = lstAux;
-                lstTemperatura.DataBind();
+                GridView1.DataSource = null;
+                GridView1.DataSource = lstTemperaturas;
+                GridView1.DataBind();
             }
 
         }
@@ -91,25 +84,36 @@ namespace Lab01_ASP
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            FileStream stream;
-            string fileName = Server.MapPath("Temperaturas.txt");
-            if (lstDepartamentos.Count == 0) stream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
-            else stream = new FileStream(fileName, FileMode.Append, FileAccess.Write);
-            StreamWriter writer = new StreamWriter(stream);
-            clsTemperatura nuevaTemp = new clsTemperatura();
-            nuevaTemp.NoIdentificacion = DropDownList1.SelectedValue.ToString();
-            nuevaTemp.Grados = Convert.ToInt32(txtTemperatura.Text); ;
-            nuevaTemp.Fecha = Calendar1.SelectedDate;
-            writer.WriteLine(nuevaTemp.NoIdentificacion);
-            writer.WriteLine(nuevaTemp.Grados);
-            writer.WriteLine(nuevaTemp.Fecha);
-            writer.Close();
-            this.lstTemperaturas.Add(nuevaTemp);
-            string script = "alert(\"Registro agregado exitosamente.\");";
-            ScriptManager.RegisterStartupScript(this, GetType(),
-                                    "ServerControlScript", script, true);
+            if (txtTemperatura.Text.Trim().Length > 0)
+            {
+                FileStream stream;
+                string fileName = Server.MapPath("Temperaturas.txt");
+                if (lstDepartamentos.Count == 0) stream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
+                else stream = new FileStream(fileName, FileMode.Append, FileAccess.Write);
+                StreamWriter writer = new StreamWriter(stream);
+                clsTemperatura nuevaTemp = new clsTemperatura();
+                nuevaTemp.NoIdentificacion = DropDownList1.SelectedValue.ToString();
+                nuevaTemp.Grados = Convert.ToInt32(txtTemperatura.Text); ;
+                nuevaTemp.Fecha = Calendar1.SelectedDate;
+                writer.WriteLine(nuevaTemp.NoIdentificacion);
+                writer.WriteLine(nuevaTemp.Grados);
+                writer.WriteLine(nuevaTemp.Fecha);
+                writer.Close();
+                this.lstTemperaturas.Add(nuevaTemp);
+                txtTemperatura.Text = "";
+                DropDownList1.SelectedIndex = 0;
+                string script = "alert(\"Registro agregado exitosamente.\");";
+                ScriptManager.RegisterStartupScript(this, GetType(),
+                                        "ServerControlScript", script, true);
+                leer();
+            }
+            else
+            {
+                string script = "alert(\"Debe agregar una temperatura\");";
+                ScriptManager.RegisterStartupScript(this, GetType(),
+                                        "ServerControlScript", script, true);
+            }
         }
-
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
             mostrarDep();

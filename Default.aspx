@@ -18,9 +18,21 @@
         <br />
         <asp:Label ID="lblTempPromedio" runat="server" Text="Temperatura promedio en el departamento: "></asp:Label>
         <br />
+        <br />
+       
+        <div style="height: 226px; width: 661px">
+            <asp:GridView ID="dtgDatos" runat="server">
+            </asp:GridView>
+            <br />
+            <asp:Button ID="brnAscendente" runat="server" Height="30px" OnClick="brnAscendente_Click" Text="Ordenar Ascendente" Width="188px" />
+            <br />
+            <br />
+            <asp:Button ID="btnDescendente" runat="server" Text="Ordenar Descendente" Width="187px" />
+        </div>
        
         <p> 
             &nbsp;</p>
+        
     </div>
 
 
