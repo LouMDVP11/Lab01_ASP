@@ -10,10 +10,10 @@ namespace Lab01_ASP
 {
     public partial class _Default : Page
     {
-        List<clsDepartamento> lstDepartamentos = new List<clsDepartamento>();
-        List<clsTemperatura> lstTemperaturas = new List<clsTemperatura>();
-        List<clsTemp> lstAux = new List<clsTemp>();
-        static int orden;
+        static List<clsDepartamento> lstDepartamentos = new List<clsDepartamento>();
+        static List<clsTemperatura> lstTemperaturas = new List<clsTemperatura>();
+        static List<clsTemp> lstAux = new List<clsTemp>();
+        static List<clsTemp> lstAux2 = new List<clsTemp>();
         double temperaturaProm;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -65,7 +65,13 @@ namespace Lab01_ASP
                     }
                 }
             }
-            if(!IsPostBack)
+            if (lstAux2 != null) { 
+                dtgDatos.DataSource = null;
+                dtgDatos.DataSource = lstAux2;
+                dtgDatos.DataBind();
+                lstAux2 = null;
+            }
+            if (!IsPostBack)
                 if (lstDepartamentos.Count > 0)
                 {
                     DropDownList1.Items.Clear();
@@ -77,21 +83,7 @@ namespace Lab01_ASP
                     dtgDatos.DataSource = null;
                     dtgDatos.DataSource = lstAux;
                     dtgDatos.DataBind();
-                    orden = 0;
                 }
-            if (orden == 1) {
-                dtgDatos.DataSource = null;
-                dtgDatos.DataSource = lstAux.OrderByDescending(l => l.Temp);
-                dtgDatos.DataBind();
-                orden = 0;
-            }
-            if (orden == 2)
-            {
-                dtgDatos.DataSource = null;
-                dtgDatos.DataSource = lstAux.OrderBy(l => l.Temp);
-                dtgDatos.DataBind();
-                orden = 0;
-            }
             foreach (var l in lstTemperaturas)
             {
                 temperaturaProm += l.Grados;
@@ -121,7 +113,7 @@ namespace Lab01_ASP
                         cont++;
                     }
                 }
-            lblTempPromedio.Text = "Temperatura promedio en el departamento: " + Math.Round(tempP/cont, 2) + "°C";
+            lblTempPromedio.Text = "Temperatura promedio en el departamento: " + tempP/cont + "°C";
         }
 
         protected void DropDownList1_TextChanged(object sender, EventArgs e)
@@ -131,12 +123,15 @@ namespace Lab01_ASP
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            orden = 1;
+            lstAux2 = lstAux.OrderByDescending(l => l.Temp).ToList();
         }
-
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            lstAux2 = lstAux;
+        }
         protected void brnAscendente_Click(object sender, EventArgs e)
         {
-            orden = 2;
+            lstAux2 = lstAux.OrderBy(l => l.Temp).ToList();
         }
     }
 }

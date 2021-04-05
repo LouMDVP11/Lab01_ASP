@@ -69,12 +69,21 @@ namespace Lab01_ASP
         protected global::System.Web.UI.WebControls.Button brnAscendente;
 
         /// <summary>
-        /// Control btnDescendente.
+        /// Control brnAscendente0.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDescendente;
+        protected global::System.Web.UI.WebControls.Button brnAscendente0;
+
+        /// <summary>
+        /// Control brnAscendente1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button brnAscendente1;
     }
 }
